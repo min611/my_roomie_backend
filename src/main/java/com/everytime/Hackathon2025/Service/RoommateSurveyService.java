@@ -44,7 +44,11 @@ public class RoommateSurveyService {
                 roommateSurveyRequestDto.getDormName(),
                 roommateSurveyRequestDto.getCleanLevel(),
                 roommateSurveyRequestDto.isSmoking(),
-                roommateSurveyRequestDto.getEtc()
+                roommateSurveyRequestDto.getEtc(),
+                roommateSurveyRequestDto.getWakeUpTime(),
+                roommateSurveyRequestDto.getSleepTime(),
+                roommateSurveyRequestDto.getShowerTime(),
+                roommateSurveyRequestDto.getCallTime()
         );
 
         saveSurvey(survey);
@@ -60,15 +64,19 @@ public class RoommateSurveyService {
         boolean isMine = currentUser.getUsername().equals(author.getUsername());
 
         return new RoommateSurveyResponseDto(
-                survey.getId(),
-                userSimpleResponseDto,
-                survey.getDormName(),
-                survey.getCleanLevel(),
-                survey.isSmoking(),
-                survey.getEtc(),
-                survey.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm")),
-                isMine
-        );
+    survey.getId(),
+    userSimpleResponseDto,
+    survey.getDormName(),
+    survey.getCleanLevel(),
+    survey.isSmoking(),
+    survey.getEtc(),
+    survey.getWakeUpTime(),
+    survey.getSleepTime(),
+    survey.getShowerTime(),
+    survey.getCallTime(),
+    survey.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm")),
+    isMine
+);
     }
 
     public List<RoommateSurveyResponseDto> getAllList(User currentUser){
@@ -105,15 +113,21 @@ public class RoommateSurveyService {
                     UserSimpleResponseDto userSimpleResponseDto = userService.convertUserToSimpleDto(author, author);
                     double matchingRate = calculateMatchingRate(submittedSurvey, survey);
                     return new MatchingResultResponseDto(
-                            survey.getId(),
-                            userSimpleResponseDto,
-                            survey.getDormName(),
-                            survey.getCleanLevel(),
-                            survey.isSmoking(),
-                            survey.getEtc(),
-                            survey.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm")),
-                            matchingRate
-                    );
+    survey.getId(),
+    userSimpleResponseDto,
+    survey.getDormName(),
+    survey.getCleanLevel(),
+    survey.isSmoking(),
+    survey.getEtc(),
+    survey.getWakeUpTime(),
+    survey.getSleepTime(),
+    survey.getShowerTime(),
+    survey.getCallTime(),
+    survey.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm")),
+    matchingRate
+);
+
+
                 })
                 .sorted(Comparator.comparing(MatchingResultResponseDto::getMatchingRate).reversed()) // 일치율 높은 순으로 정렬
                 .collect(Collectors.toList());
