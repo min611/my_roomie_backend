@@ -39,13 +39,18 @@ public class RoommateSurveyService {
 
     public RoommateSurveyResponseDto createSurvey(User user, RoommateSurveyRequestDto roommateSurveyRequestDto) {
 
-        RoommateSurvey survey = new RoommateSurvey(
-                user,
-                roommateSurveyRequestDto.getDormName(),
-                roommateSurveyRequestDto.getCleanLevel(),
-                roommateSurveyRequestDto.isSmoking(),
-                roommateSurveyRequestDto.getEtc()
-        );
+       RoommateSurvey survey = new RoommateSurvey(
+    user,
+    roommateSurveyRequestDto.getDormName(),
+    roommateSurveyRequestDto.getCleanLevel(),
+    roommateSurveyRequestDto.isSmoking(),
+    roommateSurveyRequestDto.getEtc(),
+    roommateSurveyRequestDto.getSleepTime(),
+    roommateSurveyRequestDto.getWakeUpTime(),
+    roommateSurveyRequestDto.getPhoneTime(),
+    roommateSurveyRequestDto.getShowerTime()
+);
+
 
         saveSurvey(survey);
 
@@ -59,16 +64,21 @@ public class RoommateSurveyService {
         UserSimpleResponseDto userSimpleResponseDto = userService.convertUserToSimpleDto(author, author);
         boolean isMine = currentUser.getUsername().equals(author.getUsername());
 
-        return new RoommateSurveyResponseDto(
-                survey.getId(),
-                userSimpleResponseDto,
-                survey.getDormName(),
-                survey.getCleanLevel(),
-                survey.isSmoking(),
-                survey.getEtc(),
-                survey.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm")),
-                isMine
-        );
+       return new RoommateSurveyResponseDto(
+    survey.getId(),
+    userSimpleResponseDto,
+    survey.getDormName(),
+    survey.getCleanLevel(),
+    survey.isSmoking(),
+    survey.getEtc(),
+    survey.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm")),
+    isMine,
+    survey.getSleepTime(),
+    survey.getWakeUpTime(),
+    survey.getPhoneTime(),
+    survey.getShowerTime()
+);
+
     }
 
     public List<RoommateSurveyResponseDto> getAllList(User currentUser){
